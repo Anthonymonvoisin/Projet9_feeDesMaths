@@ -1,14 +1,23 @@
 
+header{
+    background-color: blue;
+    
+}
+#en-tete{
+    background-color: red;
+    height: 100px;
+}
+
 h1,h2
 {
     text-align: center;
 }
 
-#logo
+header #logo
 {
     position: absolute;
-    left:20px;
-    top:0;
+    left:50px;
+    margin-top:10px;
     width: 80px;
     height: 80px;
 }

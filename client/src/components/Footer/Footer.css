@@ -1,12 +1,21 @@
-Footer{
-    background-color: lightcoral;
+footer{
+    background-color: blue;
 }
-
+footer .row{
+    background-color: red;
+    height: 100px;
+}
+.row #logo{
+    margin-top: 10px;
+}
 h1,h2
 {
     text-align: center;
 }
 
+#text{
+    padding-top: 40px;
+}
 #logo
 {
     position: absolute;
