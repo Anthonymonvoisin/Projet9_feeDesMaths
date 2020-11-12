@@ -1,12 +1,8 @@
 
 header{
-    background-color: blue;
     
 }
-#en-tete{
-    background-color: red;
-    height: 100px;
-}
+
 
 h1,h2
 {
@@ -16,8 +12,7 @@ h1,h2
 header #logo
 {
     position: absolute;
-    left:50px;
-    margin-top:10px;
+    top:10px;
     width: 80px;
     height: 80px;
 }

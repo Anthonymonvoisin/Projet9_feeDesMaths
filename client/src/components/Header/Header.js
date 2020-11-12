@@ -4,18 +4,17 @@ import {UserContext} from '../../App'
 import './Header.css'
 import logo from '../../Images/logo.png'
 
-
 const Header = () =>{
     return(
         <header>
             <div class="container">
-            <div class="row">
-            <div id="en-tete" class="col-12">
-                <h1>Fée des maths</h1>
-                <h2>- Site d'apprentissage pour MPSI -</h2>
-                <img src={logo} alt= "logo" id="logo"/>
-            </div>
-            </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h1>Fée des maths</h1>
+                        <h2>- Site d'apprentissage pour MPSI -</h2>
+                        <img src={logo} alt= "logo" id="logo"/>
+                    </div>
+                </div>
             </div>
         </header>
     )
