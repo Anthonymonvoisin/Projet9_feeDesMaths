@@ -15,7 +15,7 @@ const Footer = () =>{
                 <div className="col-10">
                     <div className="row">
                         <div className="col-4 ">
-                            <a title="">Mentions Légales</a>
+                            <Link to="/juridique">Mentions légales</Link>
                         </div>
                         <div className="col-4">
                             <a title="Fée des maths">Fée des maths</a>
