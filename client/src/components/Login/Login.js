@@ -1,5 +1,5 @@
 import React,{useState, useContext} from 'react'
-import '../screens/Pages.css'
+import './login.css'
 import {Link, useHistory} from 'react-router-dom'
 import {UserContext} from '../../App'
 
