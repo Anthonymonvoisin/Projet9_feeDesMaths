@@ -3,10 +3,8 @@ import {Link, useHistory} from 'react-router-dom'
 import {UserContext} from '../../App'
 
 const NavBar = () =>{
-
     const {state, dispatch} = useContext(UserContext)
     const history = useHistory()
-
     const renderList=()=>{
         var rang
         if(state){
@@ -115,7 +113,10 @@ const NavBar = () =>{
     }
 
     return(
+        <div class='container'>
+                
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            
             <Link className="navbar-brand" 
             to={
                 state?"/":"/login",
@@ -130,7 +131,10 @@ const NavBar = () =>{
                     {renderList()}                          {/*WARNING BECAUSE OF THIS LINE*/}
                 </ul>
             </div>
+            
         </nav>
+        </div>
+            
     )
 }
 

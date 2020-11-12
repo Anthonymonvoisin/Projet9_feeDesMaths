@@ -1,27 +1,19 @@
 footer{
-    background-color: blue;
-}
-footer .row{
-    background-color: red;
-    height: 100px;
-}
-.row #logo{
-    margin-top: 10px;
-}
-h1,h2
-{
-    text-align: center;
+    
 }
 
+
 #text{
-    padding-top: 40px;
+    margin-top: 10px;
 }
-#logo
-{
-    position: absolute;
-    left:20px;
-    top:0;
+
+#logofoo{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     width: 80px;
     height: 80px;
 }
+
+
 
