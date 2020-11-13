@@ -1,0 +1,16 @@
+.megatitre{
+    margin-top: 50px;
+}
+.titre {
+    text-align:left;
+    margin : 50px 200px 50px 200px ;
+    font-size : 30px;
+}
+.para {
+    text-align : justify;
+    margin : 50px 200px 50px 200px ;
+}
+.dernierpara{
+    text-align : justify;
+    margin : 50px 200px 100px 200px ;
+}
