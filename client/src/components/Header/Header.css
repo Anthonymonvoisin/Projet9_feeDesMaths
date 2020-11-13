@@ -1,14 +1,18 @@
 
+header{
+    
+}
+
+
 h1,h2
 {
     text-align: center;
 }
 
-#logo
+header #logo
 {
     position: absolute;
-    left:20px;
-    top:0;
+    top:10px;
     width: 80px;
     height: 80px;
 }

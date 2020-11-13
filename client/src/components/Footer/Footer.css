@@ -1,18 +1,19 @@
-Footer{
-    background-color: lightcoral;
+footer{
+    
 }
 
-h1,h2
-{
-    text-align: center;
+
+#text{
+    margin-top: 10px;
 }
 
-#logo
-{
-    position: absolute;
-    left:20px;
-    top:0;
+#logofoo{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     width: 80px;
     height: 80px;
 }
+
+
 

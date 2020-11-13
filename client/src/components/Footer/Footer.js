@@ -7,33 +7,31 @@ import logo from '../../Images/logo.png'
 
 const Footer = () =>{
     return(
-        <footer className="col-12" id="footer">
-            <div className="row">
-                <div className="col-2 ">
-                    <img src={logo} alt="logo" id="logo"/>
-                </div>
-                <div className="col-10">
-                    <div className="row">
-                        <div className="col-4 ">
-                            <Link to="/juridique">Mentions légales</Link>
-                        </div>
-                        <div className="col-4">
-                            <a title="Fée des maths">Fée des maths</a>
-                        </div>
-                        <div className="col-4">
-                            <p>Site internet du projet 9</p>
-                        </div>
-                    </div>
-                    <div className="col-md-6 offset-md-4">
-                        <div className="justify-content-center">
-                            <div id="copyright">Tous droits réservés.</div>
-                        </div>
-                    </div>
-                </div>
+<footer class="col-12" id="footer">
+<div class="container">
+
+    
+    
+        <div class="row">
+        <div class="col-md-4 text-center ">
+            <div id="text">
+        <Link to="/juridique">Mentions légales</Link>
             </div>
-        </footer>
+            </div>
+            <div class="col-md-4 text-center ">
+                <p id="text" >Fée des maths</p>
+            </div>
+            <div class="col-md-4 text-center ">
+                <p id="text" >Site internet du projet 9</p>
+            </div>
+            <div class="col-12  ">
+            <img src={logo} alt= "logo" id="logofoo"/>
+            </div>
+        </div>
+    
+</div>
+</footer>
 
     )
 }
-
 export default Footer
