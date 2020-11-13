@@ -113,7 +113,7 @@ const NavBar = () =>{
     }
 
     return(
-        <div class='container'>
+        
                 
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             
@@ -131,11 +131,7 @@ const NavBar = () =>{
                     {renderList()}                          {/*WARNING BECAUSE OF THIS LINE*/}
                 </ul>
             </div>
-            
         </nav>
-        </div>
-            
     )
 }
-
 export default NavBar

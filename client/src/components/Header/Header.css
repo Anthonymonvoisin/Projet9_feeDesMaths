@@ -1,18 +1,21 @@
 
-header{
+#head{
+    background-color: #f5ab36; 
     
 }
 
 
-h1,h2
+header h1,h2
 {
     text-align: center;
+    color: #E22149;
 }
 
 header #logo
 {
     position: absolute;
     top:10px;
+    margin-left: 50px;
     width: 80px;
     height: 80px;
 }

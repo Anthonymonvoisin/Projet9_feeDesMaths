@@ -69,8 +69,6 @@ const Routing = () => {
             <Route exact path="/juridique">
                 <Juridique/>
             </Route>
-
-
         </Switch>
     )
 }
@@ -83,10 +81,8 @@ function App() {
                 {/* HEADER */}
                 <Header/>
                 <NavBar/> {/* */}
-
                 {/*Body*/} {/*visible que si login*/}
                 <Routing/>
-
                 {/* FOOTER
           Ajouter Information en footer et non en navbar
         */}

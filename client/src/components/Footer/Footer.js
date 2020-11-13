@@ -7,11 +7,7 @@ import logo from '../../Images/logo.png'
 
 const Footer = () =>{
     return(
-<footer class="col-12" id="footer">
-<div class="container">
-
-    
-    
+<footer class="col-12" id="bas">
         <div class="row">
         <div class="col-md-4 text-center ">
             <div id="text">
@@ -28,10 +24,7 @@ const Footer = () =>{
             <img src={logo} alt= "logo" id="logofoo"/>
             </div>
         </div>
-    
-</div>
 </footer>
-
     )
 }
 export default Footer
