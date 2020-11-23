@@ -1,12 +1,13 @@
 import React from 'react'
+import './Admin.css';
 import '../screens/Pages.css'
 
 const Admin = ()=>{
     return(
-        <div className="adminClass">
-            <div>
+        <div className="adminClass" class="col-10 offset-1" id="bg">
+            <div >
                 <h1>Utilisateurs</h1>
-                <table className="table">
+                <table className="table" id="tableau" >
                     <thead>
                         <tr>
                             <th>Nom</th>
@@ -14,7 +15,7 @@ const Admin = ()=>{
                             <th>rank</th>
                         </tr>
                     </thead>
-                    <tbody>{/*info de la BDD afficher 10personnes et pagesuivante en bas du tableau*/}
+                    <tbody >{/*info de la BDD afficher 10personnes et pagesuivante en bas du tableau*/}
                         <tr>
                             <td>Bondarec</td>
                             <td>theo.bondarec@isen.yncrea.fr</td>
@@ -28,9 +29,9 @@ const Admin = ()=>{
                     </tbody>
                 </table>
             </div>
-            <div className="card modif-card">                           {/*Formulaire modification rank*/}
+            <div className="card modif-card " id="modif">                           {/*Formulaire modification rank*/}
                 <h1>Modification du rank</h1>
-                <div className="formulaire">
+                <div className="formulaire" id="space">
                     <input 
                     type="text"
                     placeholder="email"
@@ -41,7 +42,7 @@ const Admin = ()=>{
                         <option>Admin</option>
                     </select>
                 </div>
-                <button type="button" className="btn btn-primary">Modifier</button>
+                <button type="button" className="btn btn-primary" >Modifier</button>
             </div>
         </div>
     )

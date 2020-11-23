@@ -1,0 +1,70 @@
+#listecours{
+    background-color: white;
+}
+#lecon{
+    padding: 10px;
+    margin-top: 10px;    
+    border-width: 5px;
+    border-color: #f5ab36;
+
+}
+
+nav{
+    margin-top: 5px;
+    padding-bottom: 5px;
+    
+}
+
+.page-link{
+    color: #3e93a3;
+}
+
+#bouton{
+    margin-left: 20px;
+    background-color: #3e93a3;
+}
+
+#title{
+    margin-left: 20px;
+}
+
+.add-card{
+    border-width: 5px;
+    border-color: #f5ab36;
+}
+#space{
+    padding-bottom: 10px;
+
+}
+
+#texte{
+    margin-bottom: 10px;
+}
+
+#bouton2{
+    background-color: #3e93a3;
+}
+
+#mescours{
+    background-color: white;
+    top: 10px;
+}
+
+.myLessonCard{
+    border-width: 5px;
+    border-color: #f5ab36;
+    margin-bottom: 10px;
+}
+
+#warning{
+    border-width: 2px;
+    border-color: #e22149;
+    background-color: white;
+    margin-left: 10px;
+    margin-top: 5px;
+    color: #3e93a3;
+}
+
+#warning:hover{
+    background-color: #e22149;
+}

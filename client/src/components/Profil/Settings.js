@@ -3,7 +3,7 @@ import '../screens/Pages.css'
 
 const Settings = ()=>{
     return(
-        <div className="myCard">
+        <div className="myCard col-10 offset-1">
             <div className="card auth-card">
                 <h1>Settings</h1>
 

@@ -113,10 +113,10 @@ const Addlesson = ()=>{
     }
 
     return(
-        <div className="myCard">
-            <div className="card add-card">
+        <div className="myCard" class="col-10 offset-1">
+            <div className="card add-card" >
                 <h1>Ajouter un cours</h1>
-                <div className="input-group">
+                <div className="input-group" id="space">
                 <div className="custom-file">
                     <input type="file" className="custom-file-input" id="inputGroupFile01"
                     aria-describedby="inputGroupFileAddon01"
@@ -125,7 +125,7 @@ const Addlesson = ()=>{
                     <label className="custom-file-label" htmlFor="inputGroupFile01">Add Illustration</label>
                 </div>
                 </div>
-                <div className="form-row mcl">
+                <div className="form-row mcl" id="space">
                     <div className="col">
                         <input type="text" className="form-control" placeholder="Matière"
                         value={matiere}
@@ -146,18 +146,20 @@ const Addlesson = ()=>{
                     </div>
                 </div>
                 <textarea 
+                    id="texte"
                     type="text"
                     placeholder="Description"
                     value={description}
                     onChange={(e)=>setDescription(e.target.value)}
                 />
                 <textarea 
+                    id="texte"
                     type="text"
                     placeholder="Cours"
                     value={cours}
                     onChange={(e)=>setCours(e.target.value)}
                 />
-                <div className="input-group">
+                <div className="input-group" id="space">
                     <div className="custom-file">
                         <input type="file" className="custom-file-input" id="inputGroupFile01"
                         aria-describedby="inputGroupFileAddon01"
@@ -169,7 +171,7 @@ const Addlesson = ()=>{
                         <label className="custom-file-label" htmlFor="inputGroupFile01">Add pdf</label>
                     </div>
                 </div>
-                <button type="button" className="btn btn-primary"
+                <button id ="bouton2" type="button" className="btn btn-primary"
                     onClick={()=>postLesson()}
                 >
                     Upload

@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react'
 import '../screens/Pages.css'
 import {Link} from 'react-router-dom'
+import './Cours.css';
 import {UserContext} from '../../App'
 
 const MesCours = ()=>{
@@ -36,7 +37,7 @@ const MesCours = ()=>{
 
 
     return(
-        <div>
+        <div class="col-10 offset-1" id="mescours">
             <div>
                 <h1>Mes Cours</h1>
                 <h5>50 posts</h5>   
@@ -46,12 +47,12 @@ const MesCours = ()=>{
                    mesCours.map(item=>{
                        return(
                         <div className={"card myLessonCard"} key={item._id}>
-                            <img className="card-img imgTest" src={item.photo} alt="Cardimagecap"></img>
+                            <img className="card-img imgTest" src={item.photo} height="300px" width="100px" alt="Cardimagecap"></img>
                             <div className="f">
-                                <div className="card-title">
+                                <div className="card-title" id="title">
                                     <h2>{item.chapitre}</h2>
         
-                                    <Link to="/modifLesson" className="btn btn-primary">Modifier</Link>        {/*MODIFIER/SUPPR juste pour rank=prof */}
+                                    <Link to="/modifLesson" className="btn btn-primary" id="warning">Modifier</Link>        {/*MODIFIER/SUPPR juste pour rank=prof */}
                                                                                             {/*
                                                                                                 Page speciale modif pour les prof ?
                                                                                                 un formulaire pré remplis avec info bdd
@@ -59,7 +60,7 @@ const MesCours = ()=>{
                                                                                             */}
                                     {/* {item.postedBy._id == state._id */}
                                     {/* && */}
-                                    <button type="button" className="btn btn-outline-primary"
+                                    <button type="button" id="warning" className="btn btn-outline-primary"
                                     onClick={()=>{deletePost(item._id)}}
                                     >
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -71,7 +72,7 @@ const MesCours = ()=>{
                                 <div className="card-body">
                                     {item.description}
                                 </div>
-                                <Link to={"/cours/" +item._id} className="btn btn-primary">Voir le cours</Link>
+                                <Link to={"/cours/" +item._id} id="bouton" className="btn btn-primary">Voir le cours</Link>
                             </div>
                         </div>
                        )

@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react'
 import '../screens/Pages.css'
+import './Cours.css';
 import {Link} from 'react-router-dom'
 import { UserContext } from '../../App'
 
@@ -61,7 +62,7 @@ const Cours = ()=>{
 
 
     return(
-        <div>
+        <div class="col-10 offset-1" id="listecours">
             <h1>Cours</h1>
             <div className="lessonSelection">               {/*Dynamique en fonction des cours de la bdd*/}
                 <div className="matiereSelection">
@@ -73,6 +74,7 @@ const Cours = ()=>{
                         <option value="anglais">Anglais</option>
                         <option value="test">Test</option>
                     </select>
+                    <div><p></p></div>
                 </div>
 
                 {/* <div className="chapitreSelection">                          PAS ENCORE FAIT A FAIRE ?
@@ -87,23 +89,24 @@ const Cours = ()=>{
                     </select>
                 </div> */}
             </div>
-            <div className="allCard">
+            <div className="allCard" >
                 {
                     data.map(item=>{
                         return( 
-                            <div className={"card filterDiv " + item.matiere} key={item._id}>
-                                <img className="card-img imgTest" src={item.photo} alt="Cardimagecap"></img>
-                                <div className="f">
-                                    <div className="card-title">
+                            <div id="lecon" className={"card filterDiv " + item.matiere} key={item._id}>
+                                <img className="card-img imgTest" src={item.photo} height="300px" width="100px" alt="Cardimagecap"></img>
+                                <div className="f" >
+                                    <div className="card-title" id="title">
                                         <div><h2>{item.matiere}</h2></div>
                                         <h2>{item.chapitre}</h2>
                                     </div>
                                     <div className="card-body">
                                         {item.description}
                                     </div>
-                                    <Link to={"/cours/" +item._id} className="btn btn-primary">Voir le cours</Link>
+                                    <Link to={"/cours/" +item._id} className="btn btn-primary" id="bouton">Voir le cours</Link>
                                 </div>
                             </div>
+                            
                         )
                     })
                 }

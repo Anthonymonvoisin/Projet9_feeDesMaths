@@ -1,0 +1,29 @@
+#bg{
+    margin-top: 10px;
+    background-color: white;
+    
+}
+
+table {
+    border: 5px solid #E22149;
+    width: 50%;
+}
+
+
+#modif{
+    bottom: 10px;
+    border: none;
+}
+
+#space{
+    padding-bottom: 5px;
+}
+
+.btn-primary{
+    background-color: #3E93A3;
+    border-width: 0px;
+}
+
+.btn-primary:hover{
+    background-color: #3E93A3;
+}

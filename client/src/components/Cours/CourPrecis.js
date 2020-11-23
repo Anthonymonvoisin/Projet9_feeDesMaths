@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {useParams} from 'react-router-dom'
+import './Cours.css';
 import '../screens/Pages.css'
 
 const CoursPrecis = ()=>{

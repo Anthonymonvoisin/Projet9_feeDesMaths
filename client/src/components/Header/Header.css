@@ -4,11 +4,11 @@
     
 }
 
-
 header h1,h2
 {
     text-align: center;
     color: #E22149;
+    width: 100%;
 }
 
 header #logo
