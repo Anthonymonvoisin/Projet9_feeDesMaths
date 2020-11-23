@@ -1,18 +1,27 @@
 footer{
-    
+    background-color: #BC3741;
+    position : fixed;
+    margin-bottom : 0;
 }
 
 
 #text{
-    margin-top: 10px;
+    margin-top: 5px;
+    color : black;
+    margin-bottom : 0;
 }
 
 #logofoo{
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 80px;
-    height: 80px;
+    width: 20px;
+    height: 20px;
+    margin-bottom : 0;
+}
+.lien{
+    text-decoration:none;
+    color : black;
 }
 
 
