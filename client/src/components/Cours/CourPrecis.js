@@ -52,12 +52,22 @@ const CoursPrecis = ()=>{
                 </div>
             </div>
 
+
             <div className="card lesson">
                 <h2 className="card-title">Cours</h2>
                 <p className="card-body">
                     {cours.cours}
                 </p>
             </div>
+
+            {/*todo: quizz dynamique en fonction de bdd */}
+            <div className="card lessonDescription">
+                <h2 className="card-title">Quiz</h2>
+
+                //code ton quizz ici
+            </div>
+
+
 
             {/*AJOUT BOUTON TELECHARGEMENT PDF ACCES AU PDF VIA {cours.pdf} */}
 

@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="11b7491a-b7c3-49dd-9e60-4052782e09b9" name="Default Changelist" comment="" />
+    <list default="true" id="11b7491a-b7c3-49dd-9e60-4052782e09b9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Cours/CourPrecis.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Cours/CourPrecis.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/screens/Pages.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/screens/Pages.css" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -38,19 +42,6 @@
       <recent name="C:\Users\Baloo\Documents\GitHub\feeDesMaths\client\src\components\Login" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -64,6 +55,7 @@
       <workItem from="1605168371436" duration="1317000" />
       <workItem from="1605170367212" duration="3637000" />
       <workItem from="1605195330837" duration="1406000" />
+      <workItem from="1606131573616" duration="687000" />
     </task>
     <servers />
   </component>

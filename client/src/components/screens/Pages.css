@@ -91,6 +91,12 @@ body{
     margin: auto auto;
     margin-bottom: 1%;
 }
+.lessonQuiz{
+    width: 90%;
+    margin: auto auto;
+    margin-bottom: 1%;
+}
+
 .lessonPlan{
     width: 90%;
     margin: auto auto;
