@@ -1,29 +1,32 @@
+const cookieParser = require('cookie-parser')
+const csrf = require('csurf')
 const express = require('express')
 const app = express()
-const mongoose = require('mongoose')
-const PORT = 5000
-const {MONGOURI} = require('./keys')
+const PORT = process.env.PORT || 5000
 
-require('./models/user')
-require('./models/post')
+
+const admin = require('firebase-admin')
+const serviceAccount = require('./keys/serviceAccountKey.json')
+admin.initializeApp({
+    credential:admin.credential.cert(serviceAccount),
+    databaseURL: "https://feedesmaths.firebaseio.com"
+})
+
+const firebase = require('firebase/app')
+const firebaseConfig = require('./keys/firebaseConfig.json')
+firebase.initializeApp(firebaseConfig)
+
 
 app.use(express.json())
+app.use(cookieParser())         //SERT TOUJOURS ?
+
 app.use(require('./routes/auth'))
 app.use(require('./routes/post'))
+app.use(require('./routes/admin'))
+app.use(require('./routes/settings'))
 
-
-mongoose.connect(MONGOURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-mongoose.connection.on('connected', ()=>{
-    console.log("dataBase connected")
-})
-mongoose.connection.on('error', (err)=>{
-    console.log(err)
-})
 
 
 app.listen(PORT, ()=>{
-    console.log("server running on", PORT)
+    console.log(`server running on : http://localhost:${PORT}`)
 })

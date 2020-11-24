@@ -1,12 +1,23 @@
 import React, {useState, useEffect, useContext} from 'react'
 import '../screens/Pages.css'
 import './Cours.css';
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import { UserContext } from '../../App'
 
 const Cours = ()=>{
     const [data, setData] = useState([])
     const {state, dispatch} = useContext(UserContext)
+    const history = useHistory()
+
+
+    /// SI tokenExpired => go to login page
+    const clearExpiredToken = (errorCode)=>{
+        if(errorCode === 'auth/id-token-expired'){
+            localStorage.clear()
+            dispatch({type:"CLEAR"})
+            history.push('/login')
+        }
+    }
 
     function filterSelection() {
         var inputState = document.getElementById("inputState");
@@ -37,7 +48,7 @@ const Cours = ()=>{
         arr2 = name.split(" ");
         for (i = 0; i < arr2.length; i++) {
             while (arr1.indexOf(arr2[i]) > -1) {
-            arr1.splice(arr1.indexOf(arr2[i]), 1);     
+                arr1.splice(arr1.indexOf(arr2[i]), 1);
             }
         }
         element.className = arr1.join(" ");
@@ -50,13 +61,14 @@ const Cours = ()=>{
                 Authorization:"Bearer "+localStorage.getItem("jwt")
             }
         }).then(res=>res.json())
-        .then(result=>{
-            setData(result.posts)
-            if(result.posts.length !== 0){
-                console.log(result.posts)
-                filterSelection("all")
-            }
-        })
+            .then(result=>{
+                clearExpiredToken(result.code)
+                setData(result)
+                if(result.length !== 0){
+                    // console.log(result)
+                    filterSelection("all")
+                }
+            })
     },[])
 
 
@@ -93,7 +105,7 @@ const Cours = ()=>{
                 {
                     data.map(item=>{
                         return( 
-                            <div id="lecon" className={"card filterDiv " + item.matiere} key={item._id}>
+                            <div id="lecon" className={"card filterDiv " + item.matiere} key={item.lessonId}>
                                 <img className="card-img imgTest" src={item.photo} height="300px" width="100px" alt="Cardimagecap"></img>
                                 <div className="f" >
                                     <div className="card-title" id="title">
@@ -103,7 +115,7 @@ const Cours = ()=>{
                                     <div className="card-body">
                                         {item.description}
                                     </div>
-                                    <Link to={"/cours/" +item._id} className="btn btn-primary" id="bouton">Voir le cours</Link>
+                                    <Link to={"/cours/" +item.lessonId} className="btn btn-primary" id="bouton">Voir le cours</Link>
                                 </div>
                             </div>
                             

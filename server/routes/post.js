@@ -1,29 +1,33 @@
 const express = require('express')
 const router = express.Router()
-const mongoose = require('mongoose')
-const requireLogin = require('../middleware/requireLogin')
-const Post = mongoose.model('Post')
+const FBAuth = require('../middleware/requireLogin')
 
-//acces à tous les posts requiert d'etre login 
-router.get('/cours', requireLogin, (req, res)=>{
-    Post.find()
-    .populate("postedBy", "_id name")
-    .then(posts=>{
-        res.json({posts})
-    })
-    .catch(err=>{
-        console.log(err)
-    })
+const admin = require('firebase-admin')
+
+//acces aux posts, cree un post == LOGIN
+router.get('/cours', FBAuth ,(req, res)=>{
+    admin.firestore().collection("cours").get()
+        .then(data=>{
+            let cours = []
+            data.forEach(doc => {
+                cours.push(doc.data())
+            })
+            return res.json(cours)
+        })
+        .catch(err=>{
+            console.error(err)
+        })
 })
 
-//creation post schema
-router.post('/createpost', requireLogin ,(req, res)=>{
-    const {matiere, chapitre, lecon, description, cours, photo, pdf} = req.body
+///TODO : modifier la maniere de créer un cours
+router.post('/createpost', FBAuth ,(req, res)=>{
+    const {matiere, chapitre, lecon, description, cours, photo, pdf, postedBy} = req.body
     if(!matiere || !chapitre || !lecon || !description || !cours){
         res.status(422).json({error:"please add all the fields"})
     }
-    req.user.password = undefined
-    const post = new Post({
+    const lesson = admin.firestore().collection('cours').doc()
+    // console.log(lesson.id)
+    const newLesson = {
         matiere,
         chapitre,
         lecon,
@@ -31,56 +35,78 @@ router.post('/createpost', requireLogin ,(req, res)=>{
         cours,
         photo,
         pdf,
-        postedBy:req.user
-    })
-    post.save().then(result=>{
-        res.json({post:result})
-    })
-    .catch(err=>{
-        console.log(err)
-    })
+        lessonId:lesson.id,
+        postedBy
+    }
+
+    lesson.set(newLesson)
+        .then(()=>{
+            res.json({message: `Lesson ${lesson.id} created successfully`})
+        })
+        .catch(err=>{
+            res.status(500).json({error: 'something went wrong'})
+            console.log(err)
+        })
 })
 
-//get lessons i've posted
-router.get('/mypost',requireLogin, (req, res)=>{
-    Post.find({postedBy:req.user._id})
-    .populate("potedBy", "_id name")
-    .then(mypost =>{
-        res.json({mypost})
-    })
-    .catch(err=>{
-        console.log(err)
-    })
+router.get('/mypost/:userId',FBAuth, (req, res)=>{
+    const userId = req.params.userId
+    // console.log(userId)
+    admin.firestore().collection('cours').where('postedBy', '==', userId).get()
+        .then(data=>{
+            let mesCours =[]
+            data.forEach(doc => {
+                mesCours.push(doc.data())
+            })
+            // console.log(mesCours)
+            return res.json(mesCours)
+        })
+        .catch(err=>{
+            console.log(err)
+        })
 })
 
-router.get('/precis/:postId', requireLogin, (req,res)=>{
-    Post.findOne({_id:req.params.postId})
-    .populate("postedBy", "_id name")
-    .then(post=>{
-        // console.log(posts)
-        res.json(post)
-    })
-    .catch(err=>{
-        console.log(err)
-    })
-})
-
-router.delete('/deletepost/:postId', requireLogin, (req, res)=>{
-    Post.findOne({_id:req.params.postId})
-    .populate("postedBy", "_id")
-    .exec((err, post)=>{
-        if(err || !post){
-            return res.status(422).json({error:err})
-        }
-        if(post.postedBy._id.toString() === req.user._id.toString()){
-            post.remove()
-                .then(result=>{
-                    res.json(result)
-                }).catch(err=>{
-                    console.log(err)
+router.get('/precis/:postId', FBAuth, (req,res)=>{
+    const postId = req.params.postId
+    let postById
+    let postedByName
+    // console.log(postId)
+    admin.firestore().collection('cours').where('lessonId', '==', postId).get()
+        .then(data=>{
+            let mesCours =[]
+            data.forEach(doc => {
+                mesCours.push(doc.data())
+            })
+            postById = mesCours[0].postedBy
+            // console.log(postById)
+            admin.firestore().collection('users').where('userId', '==', postById).get()
+                .then(data=>{
+                    let postedInfo =[]
+                    data.forEach(doc => {
+                        postedInfo.push(doc.data())
+                    })
+                    postedByName = postedInfo[0].name
+                    // console.log(postedByName)
+                    mesCours.push({postedByName:postedByName})
+                    // console.log(mesCours)
+                    return res.json(mesCours)
                 })
-        }
-    })
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+})
+
+router.delete('/deletepost/:postId', FBAuth, (req, res)=>{
+    const postId = req.params.postId
+    // console.log(postId)
+    admin.firestore().collection('cours').doc(postId).delete()
+        .then(()=>{
+            res.json({message: "document successfully delete"})
+        })
+        .catch(err=>{
+            console.error(err)
+        })
 })
 
 module.exports = router

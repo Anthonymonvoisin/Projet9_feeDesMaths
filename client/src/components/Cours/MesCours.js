@@ -1,22 +1,34 @@
 import React, {useState, useEffect, useContext} from 'react'
-import '../screens/Pages.css'
+import {useHistory} from 'react-router-dom'
 import {Link} from 'react-router-dom'
-import './Cours.css';
 import {UserContext} from '../../App'
+import '../screens/Pages.css'
+import './Cours.css';
 
 const MesCours = ()=>{
     const [mesCours ,setCours]=useState([])
-    
+    const {state, dispatch} = useContext(UserContext)
+    const history = useHistory()
+
+    const clearExpiredToken = (errorCode)=>{
+        if(errorCode === 'auth/id-token-expired'){
+            localStorage.clear()
+            dispatch({type:"CLEAR"})
+            history.push('/login')
+        }
+    }
+
     useEffect(()=>{
-        fetch('/mypost',{
+        const userId = JSON.parse(localStorage.getItem("user")).userId
+        fetch(`/mypost/${userId}`,{
             headers:{
                 "Authorization":"Bearer "+localStorage.getItem("jwt")
             }
         }).then(res=>res.json())
-        .then(result=>{
-            // console.log(result.mypost)
-            setCours(result.mypost)
-        })
+            .then(result=>{
+                clearExpiredToken(result.code)
+                setCours(result)
+            })
     },[])
 
     const deletePost = (postId)=>{
@@ -26,13 +38,12 @@ const MesCours = ()=>{
                 Authorization:"Bearer "+localStorage.getItem("jwt")
             }
         }).then(res=>res.json())
-        .then(result=>{
-            console.log(result)
-            const newCours = mesCours.filter(item=>{
-                return item._id !== result._id
+            .then(()=>{
+                const newCours = mesCours.filter(item=>{
+                    return item.lessonId !== postId
+                })
+                setCours(newCours)
             })
-            setCours(newCours)
-        })
     }
 
 
@@ -40,13 +51,13 @@ const MesCours = ()=>{
         <div class="col-10 offset-1" id="mescours">
             <div>
                 <h1>Mes Cours</h1>
-                <h5>50 posts</h5>   
+                <h5>{mesCours.length} posts</h5>
             </div>
             <div className="allCard">
                 {
                    mesCours.map(item=>{
                        return(
-                        <div className={"card myLessonCard"} key={item._id}>
+                        <div className={"card myLessonCard"} key={item.lessonId}>
                             <img className="card-img imgTest" src={item.photo} height="300px" width="100px" alt="Cardimagecap"></img>
                             <div className="f">
                                 <div className="card-title" id="title">
@@ -61,7 +72,7 @@ const MesCours = ()=>{
                                     {/* {item.postedBy._id == state._id */}
                                     {/* && */}
                                     <button type="button" id="warning" className="btn btn-outline-primary"
-                                    onClick={()=>{deletePost(item._id)}}
+                                    onClick={()=>{deletePost(item.lessonId)}}
                                     >
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
@@ -72,7 +83,7 @@ const MesCours = ()=>{
                                 <div className="card-body">
                                     {item.description}
                                 </div>
-                                <Link to={"/cours/" +item._id} id="bouton" className="btn btn-primary">Voir le cours</Link>
+                                <Link to={"/cours/" +item.lessonId} id="bouton" className="btn btn-primary">Voir le cours</Link>
                             </div>
                         </div>
                        )

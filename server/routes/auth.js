@@ -1,73 +1,112 @@
 const express = require('express')
 const router = express.Router()
-const mongoose = require('mongoose')
-const User = mongoose.model("User")
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-const {JWT_SECRET} = require('../keys')
-const requireLogin = require('../middleware/requireLogin')
+const FBAuth = require('../middleware/requireLogin')
 
-router.post('/register', (req,res)=>{
-    const {name, isenId ,email, password}= req.body
-    if(!name || !isenId || !email || !password){
-        return res.status(422).json({error:"Complete all the fields"})
-    }
-    User.findOne({email:email})
-    .then((savedUser)=>{
-        if(savedUser){
-            return res.status(422).json({error:"email already exists"})
-        }
-        bcrypt.hash(password, 12)
-        .then(hashedpassword=>{
-            const user = new User({
-                name,
-                isenId,
-                email,
-                password:hashedpassword
+const admin = require('firebase-admin')
+
+//acces aux posts, cree un post == LOGIN
+router.get('/cours', FBAuth ,(req, res)=>{
+    admin.firestore().collection("cours").get()
+        .then(data=>{
+            let cours = []
+            data.forEach(doc => {
+                cours.push(doc.data())
             })
-            user.save()
-            .then(user=>{
-                res.json({message:"user saved"})
-            })
-            .catch(err=>{
-                console.log(err)
-            })
+            return res.json(cours)
         })
-    })
-    .catch(err=>{
-        console.log(err)
-    })
+        .catch(err=>{
+            console.error(err)
+        })
 })
 
-router.post('/login', (req, res)=>{
-    const {email, password} = req.body
-    if(!email || !password){
-        res.status(422).json({error:"please fill in all fields"})
+///TODO : modifier la maniere de créer un cours
+router.post('/createpost', FBAuth ,(req, res)=>{
+    const {matiere, chapitre, lecon, description, cours, photo, pdf, postedBy} = req.body
+    if(!matiere || !chapitre || !lecon || !description || !cours){
+        res.status(422).json({error:"please add all the fields"})
     }
-    User.findOne({email:email})
-    .then(savedUser=>{
-        if(!savedUser){
-            return res.status(422).json({error:"Invalid email or password"}) //wrong email
-        }
-        bcrypt.compare(password, savedUser.password)
-        .then(doMatch=>{
-            if(doMatch){
-                // res.json({message:"successfully signed"})
-                const token = jwt.sign({_id:savedUser._id}, JWT_SECRET)
-                const {_id, name, email, rank} = savedUser
-                res.json({token, user:{_id, name, email, rank}})
-            }
-            else{
-                return res.status(422).json({error:"Invalid email or password"}) //wrong password
-            }
+    const lesson = admin.firestore().collection('cours').doc()
+    // console.log(lesson.id)
+    const newLesson = {
+        matiere,
+        chapitre,
+        lecon,
+        description,
+        cours,
+        photo,
+        pdf,
+        lessonId:lesson.id,
+        postedBy
+    }
+
+    lesson.set(newLesson)
+        .then(()=>{
+            res.json({message: `Lesson ${lesson.id} created successfully`})
+        })
+        .catch(err=>{
+            res.status(500).json({error: 'something went wrong'})
+            console.log(err)
+        })
+})
+
+router.get('/mypost/:userId',FBAuth, (req, res)=>{
+    const userId = req.params.userId
+    // console.log(userId)
+    admin.firestore().collection('cours').where('postedBy', '==', userId).get()
+        .then(data=>{
+            let mesCours =[]
+            data.forEach(doc => {
+                mesCours.push(doc.data())
+            })
+            // console.log(mesCours)
+            return res.json(mesCours)
         })
         .catch(err=>{
             console.log(err)
         })
-    })
-    .catch(err=>{
-        console.log(err)
-    })
+})
+
+router.get('/precis/:postId', FBAuth, (req,res)=>{
+    const postId = req.params.postId
+    let postById
+    let postedByName
+    // console.log(postId)
+    admin.firestore().collection('cours').where('lessonId', '==', postId).get()
+        .then(data=>{
+            let mesCours =[]
+            data.forEach(doc => {
+                mesCours.push(doc.data())
+            })
+            postById = mesCours[0].postedBy
+            // console.log(postById)
+            admin.firestore().collection('users').where('userId', '==', postById).get()
+                .then(data=>{
+                    let postedInfo =[]
+                    data.forEach(doc => {
+                        postedInfo.push(doc.data())
+                    })
+                    postedByName = postedInfo[0].name
+                    // console.log(postedByName)
+                    mesCours.push({postedByName:postedByName})
+                    // console.log(mesCours)
+                    return res.json(mesCours)
+                })
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+})
+
+router.delete('/deletepost/:postId', FBAuth, (req, res)=>{
+    const postId = req.params.postId
+    // console.log(postId)
+    admin.firestore().collection('cours').doc(postId).delete()
+        .then(()=>{
+            res.json({message: "document successfully delete"})
+        })
+        .catch(err=>{
+            console.error(err)
+        })
 })
 
 module.exports = router

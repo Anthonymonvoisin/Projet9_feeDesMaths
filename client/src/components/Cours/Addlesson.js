@@ -1,7 +1,9 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
+import {useHistory} from 'react-router-dom'
+import {UserContext} from '../../App'
 import '../screens/Pages.css'
 
-const Addlesson = ()=>{ 
+const Addlesson = () => {
     const [matiere, setMatiere] = useState("")
     const [chapitre, setChapitre] = useState("")
     const [lecon, setLecon] = useState("")
@@ -12,42 +14,58 @@ const Addlesson = ()=>{
     const [pdf, setPdf] = useState("")
     const [url2, setUrl2] = useState("")
 
+    const {state, dispatch} = useContext(UserContext)
+    const history = useHistory()
+    // console.log(JSON.parse(localStorage.getItem("user")).userId)
+    const clearExpiredToken = (errorCode) => {
+        if (errorCode === 'auth/id-token-expired') {
+            localStorage.clear()
+            dispatch({type: "CLEAR"})
+            history.push('/login')
+            return true
+        } else {
+            return false
+        }
+    }
     //meilleure facon de async function ?
-    useEffect(()=>{
-        if(url2 && url){
-                fetch("/createpost",{
-                    method:"post",
-                    headers:{
-                        "Content-Type":"application/json",
-                        "Authorization":"Bearer "+localStorage.getItem("jwt")
-                    },
-                    body:JSON.stringify({
-                        matiere,
-                        chapitre,
-                        lecon,
-                        description,
-                        cours,
-                        photo:url,
-                        pdf:url2
-                    })
-                }).then(res=>res.json())
+    useEffect(() => {
+        if (url2 && url) {
+            fetch("/createpost", {
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+                },
+                body: JSON.stringify({
+                    matiere,
+                    chapitre,
+                    lecon,
+                    description,
+                    cours,
+                    photo: url,
+                    pdf: url2,
+                    postedBy: JSON.parse(localStorage.getItem("user")).userId
+                })
+            }).then(res => res.json())
                 .then(data => {
-                    if(data.error){
+
+                    // console.log(data)
+                    // clearExpiredToken(data.code)
+                    if (data.error) {
                         window.alert(data.error)            //PAS window.alert MAIS un TOAST AVEC BOOTSTRAP
                         setUrl("")
                         setUrl2("")
-                    }
-                    else{
+                    } else {
                         window.alert("Lesson added")        //PAS window.alert MAIS un TOAST AVEC BOOTSTRAP
                     }
-                }).catch(err=>{
-                    console.log(err)
-                })
-         }
-         // eslint-disable-next-line
-    },[url, url2])
+                }).catch(err => {
+                console.log(err)
+            })
+        }
+        // eslint-disable-next-line
+    }, [url, url2])
 
-    const postLesson = ()=>{
+    const postLesson = () => {
         //Upload Illustration
         const data = new FormData()
         data.append("file", illustration)
@@ -57,20 +75,21 @@ const Addlesson = ()=>{
 
         fetch("https://api.cloudinary.com/v1_1/feedesmaths/image/upload/", {
             method: "post",
-            body:data
+            body: data
         })
-        .then(res=>res.json())
-        .then(data=>{
-            if(data.error){
-                window.alert("illustration error : " + data.error.message)
-                return
-            }
-            // console.log(data)
-            setUrl(data.url)
-        })
-        .catch(err=>{
-            console.log(err)
-        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if (data.error) {
+                    window.alert("illustration error : " + data.error.message)
+                    return
+                }
+                // console.log(data)
+                setUrl(data.url)
+            })
+            .catch(err => {
+                console.log(err)
+            })
         //
 
         //Upload PDF
@@ -83,28 +102,28 @@ const Addlesson = ()=>{
 
         fetch("https://api.cloudinary.com/v1_1/feedesmaths/image/upload/", {
             method: "post",
-            body:dataPdf
+            body: dataPdf
         })
-        .then(res=>res.json())
-        .then(data=>{
-            if(data.error){
-                window.alert("pdf error : " + data.error.message)
-                return
-            }
-            // console.log(data)
-            setUrl2(data.url)
-        })
-        .catch(err=>{
-            console.log(err)
-        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.error) {
+                    window.alert("pdf error : " + data.error.message)
+                    return
+                }
+                // console.log(data)
+                setUrl2(data.url)
+            })
+            .catch(err => {
+                console.log(err)
+            })
         //
 
-        if(url === "" || url2 === ""){              //PAS OPTI JE PENSE
+        if (url === "" || url2 === "") {              //PAS OPTI JE PENSE
             // window.alert("URL vide")
-            if(url !== ""){
+            if (url !== "") {
                 //suprimer url2 de la bdd Cloudinary
             }
-            if(url2 !== ""){
+            if (url2 !== "") {
                 //suprimer url2 de la bdd Cloudinary
             }
             setUrl("")
@@ -112,67 +131,67 @@ const Addlesson = ()=>{
         }
     }
 
-    return(
+    return (
         <div className="myCard" class="col-10 offset-1">
-            <div className="card add-card" >
+            <div className="card add-card">
                 <h1>Ajouter un cours</h1>
                 <div className="input-group" id="space">
-                <div className="custom-file">
-                    <input type="file" className="custom-file-input" id="inputGroupFile01"
-                    aria-describedby="inputGroupFileAddon01"
-                    onChange={(e)=>setIllustration(e.target.files[0])}
-                    />
-                    <label className="custom-file-label" htmlFor="inputGroupFile01">Add Illustration</label>
-                </div>
+                    <div className="custom-file">
+                        <input type="file" className="custom-file-input" id="inputGroupFile01"
+                               aria-describedby="inputGroupFileAddon01"
+                               onChange={(e) => setIllustration(e.target.files[0])}
+                        />
+                        <label className="custom-file-label" htmlFor="inputGroupFile01">Add Illustration</label>
+                    </div>
                 </div>
                 <div className="form-row mcl" id="space">
                     <div className="col">
                         <input type="text" className="form-control" placeholder="Matière"
-                        value={matiere}
-                        onChange={(e)=>setMatiere(e.target.value)}
+                               value={matiere}
+                               onChange={(e) => setMatiere(e.target.value)}
                         />
                     </div>
                     <div className="col">
                         <input type="text" className="form-control" placeholder="Chapitre"
-                        value={chapitre}
-                        onChange={(e)=>setChapitre(e.target.value)}
+                               value={chapitre}
+                               onChange={(e) => setChapitre(e.target.value)}
                         />
                     </div>
                     <div className="col">
                         <input type="text" className="form-control" placeholder="Leçon"
-                        value={lecon}
-                        onChange={(e)=>setLecon(e.target.value)}
+                               value={lecon}
+                               onChange={(e) => setLecon(e.target.value)}
                         />
                     </div>
                 </div>
-                <textarea 
+                <textarea
                     id="texte"
                     type="text"
                     placeholder="Description"
                     value={description}
-                    onChange={(e)=>setDescription(e.target.value)}
+                    onChange={(e) => setDescription(e.target.value)}
                 />
-                <textarea 
+                <textarea
                     id="texte"
                     type="text"
                     placeholder="Cours"
                     value={cours}
-                    onChange={(e)=>setCours(e.target.value)}
+                    onChange={(e) => setCours(e.target.value)}
                 />
                 <div className="input-group" id="space">
                     <div className="custom-file">
                         <input type="file" className="custom-file-input" id="inputGroupFile01"
-                        aria-describedby="inputGroupFileAddon01"
-                        onChange={(e)=>{
-                            setPdf(e.target.files[0])
-                            }
-                        }
+                               aria-describedby="inputGroupFileAddon01"
+                               onChange={(e) => {
+                                   setPdf(e.target.files[0])
+                               }
+                               }
                         />
                         <label className="custom-file-label" htmlFor="inputGroupFile01">Add pdf</label>
                     </div>
                 </div>
-                <button id ="bouton2" type="button" className="btn btn-primary"
-                    onClick={()=>postLesson()}
+                <button id="bouton2" type="button" className="btn btn-primary"
+                        onClick={() => postLesson()}
                 >
                     Upload
                 </button>

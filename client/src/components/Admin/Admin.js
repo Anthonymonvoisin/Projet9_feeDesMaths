@@ -1,48 +1,113 @@
-import React from 'react'
+import React, {useState, useEffect, useContext}from 'react'
+import {useHistory} from 'react-router-dom'
+import {UserContext} from '../../App'
 import './Admin.css';
 import '../screens/Pages.css'
 
-const Admin = ()=>{
+const Admin = () => {
+
+    const [data, setData] = useState([])
+    const {state, dispatch} = useContext(UserContext)
+    const history = useHistory()
+
+    /// SI tokenExpired => go to login page
+    const clearExpiredToken = (errorCode) => {
+        if (errorCode === 'auth/id-token-expired') {
+            localStorage.clear()
+            dispatch({type: "CLEAR"})
+            history.push('/login')
+        }
+    }
+
+    useEffect(() => {
+        fetch('/admin', {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("jwt")
+            }
+        }).then(res => res.json())
+            .then(result => {
+                clearExpiredToken(result.code)
+                setData(result)
+            })
+    }, [])
+
+
+    let idValue, newRank
+    const rankModification = () => {
+        const inputState = document.getElementById("inputState")
+        if (inputState) {
+            newRank = inputState.options[inputState.selectedIndex].value
+        }
+        const inputId = document.getElementById("inputId")
+        if (inputId) {
+            idValue = inputId.value
+            document.getElementById('inputId').value = "";
+        }
+        fetch(`/admin/rankChange`, {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            },
+            body: JSON.stringify({
+                userId: idValue,
+                newRank
+            })
+        }).then(res => res.json())
+            .then((result) => {
+                clearExpiredToken(result.code)
+                setData(result)
+            })
+            .catch(err => {
+                console.error(err)
+            })
+    }
+
     return(
-        <div className="adminClass" class="col-10 offset-1" id="bg">
-            <div >
+        <div className="adminClass">
+            <div>
                 <h1>Utilisateurs</h1>
-                <table className="table" id="tableau" >
+                <table className="table">
                     <thead>
-                        <tr>
-                            <th>Nom</th>
-                            <th>Email</th>
-                            <th>rank</th>
-                        </tr>
+                    <tr>
+                        <th>isenId</th>
+                        <th>userId</th>
+                        <th>rank</th>
+                    </tr>
                     </thead>
-                    <tbody >{/*info de la BDD afficher 10personnes et pagesuivante en bas du tableau*/}
-                        <tr>
-                            <td>Bondarec</td>
-                            <td>theo.bondarec@isen.yncrea.fr</td>
-                            <td>admin</td>
-                        </tr>
-                        <tr>
-                            <td>Sartorius</td>
-                            <td>ghislain.sartorius@isen.yncrea.fr</td>
-                            <td>student</td>
-                        </tr>
+                    {/* data.map=>{} */}
+
+
+                    <tbody>{/*info de la BDD afficher 10personnes et pagesuivante en bas du tableau*/}
+                    {data.map(item=>{
+                        return(
+                            <tr key={item.userId}>
+                                <td>{item.isenId}</td>
+                                <td>{item.userId}</td>
+                                <td>{item.rank}</td>
+                            </tr>
+                        )
+                    })}
                     </tbody>
+
+
                 </table>
             </div>
-            <div className="card modif-card " id="modif">                           {/*Formulaire modification rank*/}
+            <div className="card modif-card">                           {/*Formulaire modification rank*/}
                 <h1>Modification du rank</h1>
-                <div className="formulaire" id="space">
-                    <input 
-                    type="text"
-                    placeholder="email"
+                <div className="formulaire">
+                    <input
+                        type="text"
+                        placeholder="userId"
+                        id="inputId"
                     />
                     <select id="inputState" className="form-control">
-                        <option defaultValue>Student</option>
-                        <option>Professor</option>
-                        <option>Admin</option>
+                        <option value="student" defaultValue="student">Student</option>
+                        <option value="professor">Professor</option>
+                        <option value="admin">Admin</option>
                     </select>
                 </div>
-                <button type="button" className="btn btn-primary" >Modifier</button>
+                <button type="button" className="btn btn-primary" onClick={()=>rankModification()}>Modifier</button>
             </div>
         </div>
     )

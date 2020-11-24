@@ -1,24 +1,33 @@
-const jwt = require('jsonwebtoken')
-const {JWT_SECRET} = require('../keys')
-const mongoose = require('mongoose')
-const User = mongoose.model("User")
+// User data come from here
+const admin = require('firebase-admin')
+const db = admin.firestore()
 
 module.exports=(req, res, next)=>{
-    const {authorization} = req.headers
-    if(!authorization){
-        return res.status(401).json({error:"you must be logged in"})
+    let idToken
+    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer ')){
+        idToken = req.headers.authorization.split('Bearer ')[1]
     }
-    const token = authorization.replace("Bearer ", "")
-    jwt.verify(token, JWT_SECRET, (err, playload)=>{
-        if(err){
-            return res.status(401).json({error:"you must be logged in"})
-        }
+    else{
+        console.error('No token found')
+        return res.status(403).json({error: 'Unauthorized'})
+    }
 
-        const {_id} = playload
-        User.findById(_id).then(userdata=>{
-            req.user = userdata
-            next()
+    admin.auth().verifyIdToken(idToken)
+        .then(decodedToken=>{
+            req.user = decodedToken
+            // console.log(decodedToken)
+            return db.collection('users')
+                .where('userId', '==', req.user.uid)
+                .limit(1)
+                .get()
         })
-    })
-
+        .then(data=>{
+            // console.log(data.docs[0].data())
+            req.user.rank = data.docs[0].data().rank
+            return next()
+        })
+        .catch(err=>{
+            console.log('Error with token : ',err.code)
+            return res.status(403).json(err)
+        })
 }

@@ -34,6 +34,7 @@ const Routing = () => {
             history.push('/login')          /////////////if user can access home without signin change path to '/'
         }
     }, [])
+
     return (
         <Switch>
             <Route exact path="/">
