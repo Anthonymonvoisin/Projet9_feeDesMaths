@@ -25,19 +25,19 @@ const Login = ()=>{
                 password
             })
         }).then(res=>res.json())
-        .then(data => {
-            // console.log(data)
-            if(data.error){
-                window.alert(data.error)            //PAS window.alert MAIS un TOAST AVEC BOOTSTRAP
-            }
-            else{
-                localStorage.setItem("jwt",data.token)
-                localStorage.setItem("user",JSON.stringify(data.user))
-                dispatch({type:"USER", payload:data.user})
-                window.alert("signed in")          //PAS window.alert MAIS un TOAST AVEC BOOTSTRAP
-                history.push('/')
-            }
-        }).catch(err=>{
+            .then(data => {
+                // console.log(data)
+                if(data.error){
+                    window.alert(data.error)            //PAS window.alert MAIS un TOAST AVEC BOOTSTRAP
+                }
+                else{
+                    localStorage.setItem("jwt",data.token)
+                    localStorage.setItem("user",JSON.stringify(data.user))
+                    dispatch({type:"USER", payload:data.user})
+                    window.alert("signed in")          //PAS window.alert MAIS un TOAST AVEC BOOTSTRAP
+                    history.push('/')
+                }
+            }).catch(err=>{
             console.log(err)
         })
     }

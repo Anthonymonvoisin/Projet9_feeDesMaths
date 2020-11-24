@@ -5,25 +5,25 @@ const FBAuth = require('../middleware/requireLogin')
 const admin = require('firebase-admin')
 
 //acces aux posts, cree un post == LOGIN
-router.get('/cours', FBAuth ,(req, res)=>{
+router.get('/cours', FBAuth, (req, res) => {
     admin.firestore().collection("cours").get()
-        .then(data=>{
+        .then(data => {
             let cours = []
             data.forEach(doc => {
                 cours.push(doc.data())
             })
             return res.json(cours)
         })
-        .catch(err=>{
+        .catch(err => {
             console.error(err)
         })
 })
 
 ///TODO : modifier la maniere de créer un cours
-router.post('/createpost', FBAuth ,(req, res)=>{
+router.post('/createpost', FBAuth, (req, res) => {
     const {matiere, chapitre, lecon, description, cours, photo, pdf, postedBy} = req.body
-    if(!matiere || !chapitre || !lecon || !description || !cours){
-        res.status(422).json({error:"please add all the fields"})
+    if (!matiere || !chapitre || !lecon || !description || !cours) {
+        res.status(422).json({error: "please add all the fields"})
     }
     const lesson = admin.firestore().collection('cours').doc()
     // console.log(lesson.id)
@@ -35,76 +35,76 @@ router.post('/createpost', FBAuth ,(req, res)=>{
         cours,
         photo,
         pdf,
-        lessonId:lesson.id,
+        lessonId: lesson.id,
         postedBy
     }
 
     lesson.set(newLesson)
-        .then(()=>{
+        .then(() => {
             res.json({message: `Lesson ${lesson.id} created successfully`})
         })
-        .catch(err=>{
+        .catch(err => {
             res.status(500).json({error: 'something went wrong'})
             console.log(err)
         })
 })
 
-router.get('/mypost/:userId',FBAuth, (req, res)=>{
+router.get('/mypost/:userId', FBAuth, (req, res) => {
     const userId = req.params.userId
     // console.log(userId)
     admin.firestore().collection('cours').where('postedBy', '==', userId).get()
-        .then(data=>{
-            let mesCours =[]
+        .then(data => {
+            let mesCours = []
             data.forEach(doc => {
                 mesCours.push(doc.data())
             })
             // console.log(mesCours)
             return res.json(mesCours)
         })
-        .catch(err=>{
+        .catch(err => {
             console.log(err)
         })
 })
 
-router.get('/precis/:postId', FBAuth, (req,res)=>{
+router.get('/precis/:postId', FBAuth, (req, res) => {
     const postId = req.params.postId
     let postById
     let postedByName
     // console.log(postId)
     admin.firestore().collection('cours').where('lessonId', '==', postId).get()
-        .then(data=>{
-            let mesCours =[]
+        .then(data => {
+            let mesCours = []
             data.forEach(doc => {
                 mesCours.push(doc.data())
             })
             postById = mesCours[0].postedBy
             // console.log(postById)
             admin.firestore().collection('users').where('userId', '==', postById).get()
-                .then(data=>{
-                    let postedInfo =[]
+                .then(data => {
+                    let postedInfo = []
                     data.forEach(doc => {
                         postedInfo.push(doc.data())
                     })
                     postedByName = postedInfo[0].name
                     // console.log(postedByName)
-                    mesCours.push({postedByName:postedByName})
+                    mesCours.push({postedByName: postedByName})
                     // console.log(mesCours)
                     return res.json(mesCours)
                 })
         })
-        .catch(err=>{
+        .catch(err => {
             console.log(err)
         })
 })
 
-router.delete('/deletepost/:postId', FBAuth, (req, res)=>{
+router.delete('/deletepost/:postId', FBAuth, (req, res) => {
     const postId = req.params.postId
     // console.log(postId)
     admin.firestore().collection('cours').doc(postId).delete()
-        .then(()=>{
+        .then(() => {
             res.json({message: "document successfully delete"})
         })
-        .catch(err=>{
+        .catch(err => {
             console.error(err)
         })
 })

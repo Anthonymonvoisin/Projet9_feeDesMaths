@@ -1,112 +1,120 @@
 const express = require('express')
 const router = express.Router()
-const FBAuth = require('../middleware/requireLogin')
 
 const admin = require('firebase-admin')
+// const serviceAccount = require('../keys/serviceAccountKey.json')
+// admin.initializeApp({
+//     credential:admin.credential.cert(serviceAccount),
+//     databaseURL: "https://feedesmaths.firebaseio.com"
+// })
+const db = admin.firestore()
 
-//acces aux posts, cree un post == LOGIN
-router.get('/cours', FBAuth ,(req, res)=>{
-    admin.firestore().collection("cours").get()
-        .then(data=>{
-            let cours = []
-            data.forEach(doc => {
-                cours.push(doc.data())
-            })
-            return res.json(cours)
-        })
-        .catch(err=>{
-            console.error(err)
-        })
-})
+const firebase = require('firebase/app')
+require('firebase/auth')
+// firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE)
 
-///TODO : modifier la maniere de créer un cours
-router.post('/createpost', FBAuth ,(req, res)=>{
-    const {matiere, chapitre, lecon, description, cours, photo, pdf, postedBy} = req.body
-    if(!matiere || !chapitre || !lecon || !description || !cours){
-        res.status(422).json({error:"please add all the fields"})
+const isEmpty = (string) => {
+    if (string.trim() === '') {
+        return true
+    } else {
+        return false
     }
-    const lesson = admin.firestore().collection('cours').doc()
-    // console.log(lesson.id)
-    const newLesson = {
-        matiere,
-        chapitre,
-        lecon,
-        description,
-        cours,
-        photo,
-        pdf,
-        lessonId:lesson.id,
-        postedBy
+}
+
+const isEmail = (email) => {
+    const regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    // regEx specific expression : /^[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(isen.yncrea)\.fr$/
+    if (email.match(regEx)) {
+        return true
+    } else {
+        return false
+    }
+}
+
+router.post('/register', (req, res) => {
+    const {name, isenId, email, password} = req.body
+    const newUser = {
+        name,
+        isenId,
+        email,
+        password
+    }
+    //VALIDATION DATA
+    let errors = {}
+    if (isEmpty(newUser.email)) {
+        errors.email = 'Must not be empty'
+    } else if (!isEmail(newUser.email)) {
+        errors.email = 'Must be a valid email adress'
     }
 
-    lesson.set(newLesson)
-        .then(()=>{
-            res.json({message: `Lesson ${lesson.id} created successfully`})
+    if (isEmpty(newUser.password)) errors.email = 'Must not be empty'
+    if (isEmpty(newUser.name)) errors.name = 'Must not be empty'
+    if (isEmpty(newUser.isenId)) errors.isenId = 'Must not be empty'
+
+    if (Object.keys(errors).length > 0) {
+        console.log(errors)
+        return res.status(400).json({error: errors})
+    }
+
+    let token, userId, rank
+    firebase.auth().createUserWithEmailAndPassword(newUser.email, newUser.password)
+        .then(data => {
+            userId = data.user.uid
+            return data.user.getIdToken()
         })
-        .catch(err=>{
-            res.status(500).json({error: 'something went wrong'})
-            console.log(err)
+        .then(idToken => {
+            token = idToken
+            rank = "student"
+            const newUserDb = {
+                name: newUser.name,
+                isenId: newUser.isenId,
+                userId,
+                rank
+            }
+            return db.collection('users').doc(`${userId}`).set(newUserDb)
+        })
+        .then(() => {
+            return res.status(201).json({token, user: {userId, name, email, rank}})
+        })
+        .catch(err => {
+            console.error(err.message)
+            return res.status(500).json({error: err.message})
         })
 })
 
-router.get('/mypost/:userId',FBAuth, (req, res)=>{
-    const userId = req.params.userId
-    // console.log(userId)
-    admin.firestore().collection('cours').where('postedBy', '==', userId).get()
-        .then(data=>{
-            let mesCours =[]
-            data.forEach(doc => {
-                mesCours.push(doc.data())
-            })
-            // console.log(mesCours)
-            return res.json(mesCours)
-        })
-        .catch(err=>{
-            console.log(err)
-        })
-})
+router.post('/login', (req, res) => {
+    const {email, password} = req.body
+    const user = {
+        email,
+        password
+    }
+    let errors = {}
 
-router.get('/precis/:postId', FBAuth, (req,res)=>{
-    const postId = req.params.postId
-    let postById
-    let postedByName
-    // console.log(postId)
-    admin.firestore().collection('cours').where('lessonId', '==', postId).get()
-        .then(data=>{
-            let mesCours =[]
-            data.forEach(doc => {
-                mesCours.push(doc.data())
-            })
-            postById = mesCours[0].postedBy
-            // console.log(postById)
-            admin.firestore().collection('users').where('userId', '==', postById).get()
-                .then(data=>{
-                    let postedInfo =[]
-                    data.forEach(doc => {
-                        postedInfo.push(doc.data())
-                    })
-                    postedByName = postedInfo[0].name
-                    // console.log(postedByName)
-                    mesCours.push({postedByName:postedByName})
-                    // console.log(mesCours)
-                    return res.json(mesCours)
+    if (isEmpty(user.email)) errors.email = "Must not be empty"
+    if (isEmpty(user.password)) errors.password = "Must not be empty"
+
+    if (Object.keys(errors).length > 0) return res.status(400).json(errors)
+
+    let userId
+    firebase.auth().signInWithEmailAndPassword(user.email, user.password)
+        .then(data => {
+            userId = data.user.uid
+            return data.user.getIdToken()
+        })
+        .then(token => {
+            db.collection('users').doc(`${userId}`).get()
+                .then(doc => {
+                    const rank = doc.data().rank
+                    const name = doc.data().name
+                    return res.json({token, user: {userId, name, email, rank}})
                 })
         })
-        .catch(err=>{
-            console.log(err)
-        })
-})
-
-router.delete('/deletepost/:postId', FBAuth, (req, res)=>{
-    const postId = req.params.postId
-    // console.log(postId)
-    admin.firestore().collection('cours').doc(postId).delete()
-        .then(()=>{
-            res.json({message: "document successfully delete"})
-        })
-        .catch(err=>{
+        .catch(err => {
             console.error(err)
+            return res.status(500).json({error: err.message})
         })
+
+
 })
 
 module.exports = router

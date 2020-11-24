@@ -20,26 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="11b7491a-b7c3-49dd-9e60-4052782e09b9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/server/keys/firebaseConfig.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/keys/serviceAccountKey.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/routes/admin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/routes/settings.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Admin/Admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Admin/Admin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Cours/Addlesson.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Cours/Addlesson.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Cours/CourPrecis.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Cours/CourPrecis.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Cours/Cours.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Cours/Cours.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Cours/MesCours.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Cours/MesCours.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/keys.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/middleware/requireLogin.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/middleware/requireLogin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/models/post.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/models/user.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Login/Login.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/routes/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/routes/post.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/post.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,6 +64,19 @@
       <recent name="C:\Users\Baloo\Documents\GitHub\feeDesMaths\client\src\components\Login" />
     </key>
   </component>
+  <component name="RunManager">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -95,7 +91,8 @@
       <workItem from="1605170367212" duration="3637000" />
       <workItem from="1605195330837" duration="1406000" />
       <workItem from="1606206504178" duration="4682000" />
-      <workItem from="1606211587395" duration="1412000" />
+      <workItem from="1606211587395" duration="2989000" />
+      <workItem from="1606214880673" duration="315000" />
     </task>
     <servers />
   </component>
