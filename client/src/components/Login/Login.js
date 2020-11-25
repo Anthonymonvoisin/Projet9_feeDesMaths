@@ -85,8 +85,6 @@ const Login = ()=>{
                             onChange={(e)=>setPassword(e.target.value)}
                             />
                         </div>
-                        <div className="form-group">
-                        </div>
                         <div className="d-flex justify-content-center mt-3 login_container">
                             <button type="button" name="button" className="btn login_btn" onClick={()=> postData()}>Login</button>
                         </div>
@@ -102,7 +100,6 @@ const Login = ()=>{
                 </div>
             </div>
         </div>
-        <div><p></p></div>
     </div>
     
 )
