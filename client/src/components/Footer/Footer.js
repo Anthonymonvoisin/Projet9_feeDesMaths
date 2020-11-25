@@ -7,8 +7,8 @@ import logo from '../../Images/logo.png'
 
 const Footer = () =>{
     return(
-<footer class="col-12" id="bas">
-        <div class="row">
+<footer>
+        <div class="row" id="bas">
         <div class="col-md-4 text-center ">
             <div id="text">
         <Link to="/juridique">Mentions légales</Link>

@@ -1,10 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="11b7491a-b7c3-49dd-9e60-4052782e09b9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Cours/CourPrecis.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Cours/CourPrecis.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/screens/Pages.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/screens/Pages.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Login/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routes/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/auth.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,9 +49,13 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/server/keys" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Baloo\Documents\GitHub\Projet9_feeDesMaths\server\keys" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Baloo\Documents\GitHub\feeDesMaths\client\src\components\Profil" />
       <recent name="C:\Users\Baloo\Documents\GitHub\feeDesMaths\client\src\components\Cours" />
@@ -41,6 +63,19 @@
       <recent name="C:\Users\Baloo\Documents\GitHub\feeDesMaths\client\src\components\Register" />
       <recent name="C:\Users\Baloo\Documents\GitHub\feeDesMaths\client\src\components\Login" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -55,25 +90,64 @@
       <workItem from="1605168371436" duration="1317000" />
       <workItem from="1605170367212" duration="3637000" />
       <workItem from="1605195330837" duration="1406000" />
-      <workItem from="1606131573616" duration="687000" />
+      <workItem from="1606206504178" duration="4682000" />
+      <workItem from="1606211587395" duration="2989000" />
+      <workItem from="1606214880673" duration="315000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
   <component name="WindowStateProjectService">
     <state x="2334" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1604999444917">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2334" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1604999444917" />
-    <state x="2648" y="322" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1605000982383">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state x="971" y="433" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1606208484948">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
+    <state x="971" y="433" key="#com.intellij.fileTypes.FileTypeChooser/0.0.2560.1400/2560.0.2560.1400@0.0.2560.1400" timestamp="1606208484948" />
     <state x="2648" y="322" key="#com.intellij.fileTypes.FileTypeChooser/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1605000982383" />
+    <state x="1010" y="447" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1606207791294">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1010" y="447" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.2560.1400/2560.0.2560.1400@0.0.2560.1400" timestamp="1606207791294" />
     <state x="2660" y="275" key="FileChooserDialogImpl" timestamp="1605168967119">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2660" y="275" key="FileChooserDialogImpl/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1605168967119" />
+    <state width="2517" height="401" key="GridCell.Tab.0.bottom" timestamp="1606209317236">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="401" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.0.2560.1400@0.0.2560.1400" timestamp="1606209317236" />
+    <state width="2517" height="401" key="GridCell.Tab.0.center" timestamp="1606209317236">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="401" key="GridCell.Tab.0.center/0.0.2560.1400/2560.0.2560.1400@0.0.2560.1400" timestamp="1606209317236" />
+    <state width="2517" height="401" key="GridCell.Tab.0.left" timestamp="1606209317236">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="401" key="GridCell.Tab.0.left/0.0.2560.1400/2560.0.2560.1400@0.0.2560.1400" timestamp="1606209317236" />
+    <state width="2517" height="401" key="GridCell.Tab.0.right" timestamp="1606209317236">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="401" key="GridCell.Tab.0.right/0.0.2560.1400/2560.0.2560.1400@0.0.2560.1400" timestamp="1606209317236" />
+    <state x="943" y="315" key="search.everywhere.popup" timestamp="1606209860669">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="943" y="315" key="search.everywhere.popup/0.0.2560.1400/2560.0.2560.1400@0.0.2560.1400" timestamp="1606209860669" />
   </component>
 </project>

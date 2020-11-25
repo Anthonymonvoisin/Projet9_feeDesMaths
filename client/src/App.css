@@ -1,4 +1,6 @@
 body{/*body pages*/
     margin-top: 50px; /*Passer la NavBar*/
+    height: 100%;
+    width: 100%;
     
 }

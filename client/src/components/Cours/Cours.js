@@ -1,11 +1,23 @@
 import React, {useState, useEffect, useContext} from 'react'
 import '../screens/Pages.css'
-import {Link} from 'react-router-dom'
+import './Cours.css';
+import {Link, useHistory} from 'react-router-dom'
 import { UserContext } from '../../App'
 
 const Cours = ()=>{
     const [data, setData] = useState([])
     const {state, dispatch} = useContext(UserContext)
+    const history = useHistory()
+
+
+    /// SI tokenExpired => go to login page
+    const clearExpiredToken = (errorCode)=>{
+        if(errorCode === 'auth/id-token-expired'){
+            localStorage.clear()
+            dispatch({type:"CLEAR"})
+            history.push('/login')
+        }
+    }
 
     function filterSelection() {
         var inputState = document.getElementById("inputState");
@@ -36,7 +48,7 @@ const Cours = ()=>{
         arr2 = name.split(" ");
         for (i = 0; i < arr2.length; i++) {
             while (arr1.indexOf(arr2[i]) > -1) {
-            arr1.splice(arr1.indexOf(arr2[i]), 1);     
+                arr1.splice(arr1.indexOf(arr2[i]), 1);
             }
         }
         element.className = arr1.join(" ");
@@ -49,19 +61,20 @@ const Cours = ()=>{
                 Authorization:"Bearer "+localStorage.getItem("jwt")
             }
         }).then(res=>res.json())
-        .then(result=>{
-            setData(result.posts)
-            if(result.posts.length !== 0){
-                console.log(result.posts)
-                filterSelection("all")
-            }
-        })
+            .then(result=>{
+                clearExpiredToken(result.code)
+                setData(result)
+                if(result.length !== 0){
+                    // console.log(result)
+                    filterSelection("all")
+                }
+            })
     },[])
 
 
 
     return(
-        <div>
+        <div class="col-10 offset-1" id="listecours">
             <h1>Cours</h1>
             <div className="lessonSelection">               {/*Dynamique en fonction des cours de la bdd*/}
                 <div className="matiereSelection">
@@ -73,6 +86,7 @@ const Cours = ()=>{
                         <option value="anglais">Anglais</option>
                         <option value="test">Test</option>
                     </select>
+                    <div><p></p></div>
                 </div>
 
                 {/* <div className="chapitreSelection">                          PAS ENCORE FAIT A FAIRE ?
@@ -87,23 +101,24 @@ const Cours = ()=>{
                     </select>
                 </div> */}
             </div>
-            <div className="allCard">
+            <div className="allCard" >
                 {
                     data.map(item=>{
                         return( 
-                            <div className={"card filterDiv " + item.matiere} key={item._id}>
-                                <img className="card-img imgTest" src={item.photo} alt="Cardimagecap"></img>
-                                <div className="f">
-                                    <div className="card-title">
+                            <div id="lecon" className={"card filterDiv " + item.matiere} key={item.lessonId}>
+                                <img className="card-img imgTest" src={item.photo} height="300px" width="100px" alt="Cardimagecap"></img>
+                                <div className="f" >
+                                    <div className="card-title" id="title">
                                         <div><h2>{item.matiere}</h2></div>
                                         <h2>{item.chapitre}</h2>
                                     </div>
                                     <div className="card-body">
                                         {item.description}
                                     </div>
-                                    <Link to={"/cours/" +item._id} className="btn btn-primary">Voir le cours</Link>
+                                    <Link to={"/cours/" +item.lessonId} className="btn btn-primary" id="bouton">Voir le cours</Link>
                                 </div>
                             </div>
+                            
                         )
                     })
                 }

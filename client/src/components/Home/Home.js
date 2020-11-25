@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import './Home.css';
-import cerf from '../../Images/cerf.jpg'
-import loup from '../../Images/loup.jpg'
-import panthere from '../../Images/panthere.jpg'
 import mathe from '../../Images/math.jpg'
 import hommeordi from '../../Images/hommeordi.jpg'
 import ecriture from '../../Images/ecriture.jpg'
