@@ -78,6 +78,14 @@ const CoursPrecis = ()=>{
                     </p>
                 </div>
 
+                {//todo : quizz dynamique avec bdd}
+                <div className="card lessonDescription">
+                    <h2 className="card-title">Quiz</h2>
+
+                    //code quizz ici
+                </div>
+
+
                 {/*AJOUT BOUTON TELECHARGEMENT PDF ACCES AU PDF VIA {cours.pdf} */}
 
                 {/*Passer à la lecon suivante ou precedente*/}
