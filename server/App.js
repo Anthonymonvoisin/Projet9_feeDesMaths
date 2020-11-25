@@ -18,12 +18,13 @@ firebase.initializeApp(firebaseConfig)
 
 
 app.use(express.json())
-app.use(cookieParser())         //SERT TOUJOURS ?
+// app.use(cookieParser())         //SERT TOUJOURS ?
 
 app.use(require('./routes/auth'))
 app.use(require('./routes/post'))
 app.use(require('./routes/admin'))
 app.use(require('./routes/settings'))
+app.use(require('./middleware/tokenValidity'))
 
 
 

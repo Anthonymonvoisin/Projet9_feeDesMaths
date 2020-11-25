@@ -43,20 +43,18 @@ const Addlesson = () => {
                     description,
                     cours,
                     photo: url,
-                    pdf: url2,
-                    postedBy: JSON.parse(localStorage.getItem("user")).userId
+                    pdf: url2
                 })
             }).then(res => res.json())
                 .then(data => {
-
-                    // console.log(data)
-                    // clearExpiredToken(data.code)
+                    console.log(data)
+                    clearExpiredToken(data.code)
                     if (data.error) {
                         window.alert(data.error)            //PAS window.alert MAIS un TOAST AVEC BOOTSTRAP
                         setUrl("")
                         setUrl2("")
                     } else {
-                        window.alert("Lesson added")        //PAS window.alert MAIS un TOAST AVEC BOOTSTRAP
+                        window.alert(data.message)        //PAS window.alert MAIS un TOAST AVEC BOOTSTRAP
                     }
                 }).catch(err => {
                 console.log(err)
@@ -79,7 +77,7 @@ const Addlesson = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
+                // console.log(data)
                 if (data.error) {
                     window.alert("illustration error : " + data.error.message)
                     return
